@@ -58,8 +58,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aXb-Ah-FB2">
-                                        <rect key="frame" x="221" y="5" width="49" height="30"/>
-                                        <state key="normal" title="Reload">
+                                        <rect key="frame" x="221" y="5" width="30" height="30"/>
+                                        <state key="normal" title="↺">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -109,10 +109,12 @@
                     <navigationItem key="navigationItem" id="jQl-EI-ln3"/>
                     <connections>
                         <outlet property="backButton" destination="o5G-ut-PRR" id="xUQ-Lg-pox"/>
+                        <outlet property="bottomConstraint" destination="0KP-ec-LOa" id="ls2-GI-yd4"/>
                         <outlet property="forwardButton" destination="eWd-Bh-41X" id="Hgx-nb-gYv"/>
                         <outlet property="navigationBar" destination="jQl-EI-ln3" id="UFG-dW-8VX"/>
                         <outlet property="spinner" destination="d8k-TI-uZd" id="ltg-l6-enu"/>
                         <outlet property="stopButton" destination="bFZ-aK-lNB" id="aMA-0o-Cna"/>
+                        <outlet property="topConstraint" destination="FGY-dK-wkK" id="suP-0G-hU7"/>
                         <outlet property="urlTextField" destination="Gl8-JH-mQz" id="O7S-Dm-rkZ"/>
                         <outlet property="webView" destination="Hrs-kM-0AR" id="9Xc-Vu-5QJ"/>
                     </connections>

@@ -15,8 +15,11 @@
 @property (weak, nonatomic) IBOutlet UIButton *forwardButton;
 @property (weak, nonatomic) IBOutlet UIButton *clearButton;
 @property (weak, nonatomic) IBOutlet UITextField *urlTextField;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topConstraint;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationBar;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
+@property  float lastContentOffSet;
 @property  NSString *home ;
 @end
 
@@ -28,6 +31,8 @@
     self.home =@"http://mobilemakers.co";
     [self goToURLWithString:self.home];
     self.webView.scrollView.delegate = self;
+    self.urlTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -79,6 +84,7 @@
 }
 
 // ---------------------------------- Web View Methods ---------------------------------------------------
+#pragma mark Web View Methods
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
@@ -110,25 +116,54 @@
     return true;
 }
 
-
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    self.urlTextField.backgroundColor = [UIColor whiteColor];
-    self.urlTextField.textColor = [UIColor blackColor];
-    self.clearButton.enabled = true;
+
+    //If it is scrolling down
+    if (self.lastContentOffSet < scrollView.contentOffset.y)
+    {
+        //Limited myself with a 40 pixels boundary
+        if (self.bottomConstraint.constant > -40)
+        {
+            self.bottomConstraint.constant = self.bottomConstraint.constant -8;
+        }
+        if (self.topConstraint.constant > -33)
+        {
+            self.topConstraint.constant = self.topConstraint.constant -8;
+        }
+        NSLog(@"Down b: %f t %f", self.bottomConstraint.constant, self.topConstraint.constant);
+
+    }
+    //If it is scrolling up
+    else
+    {
+        //Can't mess with my old constraint so if never can go more than the original
+        if (self.bottomConstraint.constant <0)
+        {
+            self.bottomConstraint.constant = self.bottomConstraint.constant +8;
+
+        }
+        if (self.topConstraint.constant <8)
+        {
+            self.topConstraint.constant = self.topConstraint.constant +8;
+        }
+        NSLog(@"Up b: %f t %f", self.bottomConstraint.constant, self.topConstraint.constant);
+
+    }
+
+    //Set the property of the last Content off set to the new one
+    self.lastContentOffSet = scrollView.contentOffset.y;
+
 }
 
--(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
-    self.urlTextField.backgroundColor = [UIColor clearColor];
-    self.urlTextField.textColor = [UIColor clearColor];
-    self.clearButton.enabled = false;
-}
 
 
 
 
+
+
+
+#pragma mark end
 
 //------------------------------------- Other Methods --------------------------------------------------
 - (void) updateButtons
